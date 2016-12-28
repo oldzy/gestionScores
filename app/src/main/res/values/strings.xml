@@ -1,3 +1,23 @@
 <resources>
-    <string name="app_name">GestionScores</string>
+    <string name="app_name">Gestion de scores</string>
+    <string name="hint_pseudo">Pseudo</string>
+    <string name="hint_mdp">Mot de passe</string>
+    <string name="hint_mdp_conf">Confirmer mot de passe</string>
+    <string name="connexion">CONNEXION</string>
+    <string name="aff_form">AFFICHER FORMULAIRE</string>
+    <string name="masq_form">MASQUER FORMULAIRE</string>
+    <string name="inscription">INSCRIPTION</string>
+    <string name="ajouter_score">AJOUTER UN SCORE</string>
+    <string name="afficher_top">AFFICHER LE TOP 10 D\'UN JEU</string>
+    <string name="afficher_liste_jeu">AFFICHER LA LISTE DES JEUX GÉRÉS</string>
+    <string name="afficher_liste_utlisateur">LISTER LES UTILISATEURS</string>
+    <string name="mdp_correspond_pas">les mots de passe ne correspondent pas</string>
+    <string name="connexion_ok">OK</string>
+    <string name="prob_pseudo">Problème de pseudo (non transmis ou vide)</string>
+    <string name="prob_mdp">Problème de mot de passe (non transmis ou vide)</string>
+    <string name="prob_combinaison">Combinaison pseudo/mot de passe incorrecte</string>
+    <string name="prob_DB">Problème de connexion à la DB</string>
+    <string name="prob_autre">Un autre problème est survenu</string>
+    <string name="prob_pseudo_exist">Pseudo déjà existant</string>
+    <string name="inscription_ok">Sauvegarde dans la DB OK avec l'id </string>
 </resources>
