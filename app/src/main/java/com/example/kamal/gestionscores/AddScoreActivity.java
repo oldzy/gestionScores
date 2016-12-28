@@ -1,5 +1,6 @@
 package com.example.kamal.gestionscores;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,6 +76,9 @@ public class AddScoreActivity extends AppCompatActivity {
     }
 
     public void showMenu(){
+        Intent intent_retour = new Intent();
+        intent_retour.putExtra("utilisateur", user);
+        setResult(RESULT_OK, intent_retour);
         finish();
     }
 
@@ -85,7 +89,8 @@ public class AddScoreActivity extends AppCompatActivity {
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[2];
             try{
-                URL url = new URL("http://skurt.16mb.com/projetAndroid/ajouter_score.php?score="+params[0]+"&jeu="+params[1]+"&id_pseudo="+params[2]);
+                int score = Integer.parseInt(params[0].toString());
+                URL url = new URL("http://skurt.16mb.com/projetAndroid/ajouter_score.php?score="+score+"&jeu="+params[1].toString().replaceAll(" ", "%20")+"&id_pseudo="+params[2]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 InputStreamReader RPC = new InputStreamReader(connection.getInputStream(), "UTF-8");
@@ -97,7 +102,7 @@ public class AddScoreActivity extends AppCompatActivity {
                     switch ((int)list[1]){
                         case 0:
                             list[0] = getString(R.string.score_ok);
-                            user.addScore(new Score((String)params[1], (double)params[0]));
+                            user.addScore(new Score(params[1].toString(), score));
                             break;
                         case 100:
                             list[0] = getString(R.string.prob_score);
@@ -123,14 +128,18 @@ public class AddScoreActivity extends AppCompatActivity {
             catch(IOException ex) {
                 list[0] = ex.getMessage();
             }
+            catch (NumberFormatException exc){
+                list[1] = 1;
+                list[0] = exc.getMessage();
+            }
             return list;
         }
         @Override
         protected void onPostExecute(Object[] list)
         {
+            showMessage((String)list[0]);
             if((int)list[1] == 0)
                 showMenu();
-            showMessage((String)list[0]);
         }
     }
 }
