@@ -13,10 +13,6 @@ public class Utilisateur implements Serializable{
     private String mdp;
     private ArrayList<Score> listeScore = new ArrayList<Score>();
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getId() {
         return id;
     }
@@ -43,10 +39,6 @@ public class Utilisateur implements Serializable{
 
     public ArrayList<Score> getListeScore() {
         return listeScore;
-    }
-
-    public Utilisateur(){
-
     }
 
     public Utilisateur(int _id, String _pseudo, String _mdp){

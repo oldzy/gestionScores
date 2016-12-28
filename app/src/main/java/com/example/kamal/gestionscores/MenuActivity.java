@@ -1,11 +1,13 @@
 package com.example.kamal.gestionscores;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
+    private Utilisateur user;
     private Button ajouter_score;
     private Button afficher_top;
     private Button afficher_liste_jeu;
@@ -14,7 +16,7 @@ public class MenuActivity extends AppCompatActivity {
     private View.OnClickListener ajouter_scoreListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            startActivity(new Intent(MenuActivity.this, AddScoreActivity.class).putExtra("utilisateur", user));
         }
     };
     private View.OnClickListener afficher_topListener = new View.OnClickListener() {
@@ -82,5 +84,7 @@ public class MenuActivity extends AppCompatActivity {
         getAfficher_top().setOnClickListener(afficher_topListener);
         getAfficher_liste_jeu().setOnClickListener(afficher_liste_jeuListener);
         getAfficher_liste_utilisateur().setOnClickListener(afficher_liste_utilisateurListener);
+
+        user = (Utilisateur)getIntent().getSerializableExtra("utilisateur");
     }
 }

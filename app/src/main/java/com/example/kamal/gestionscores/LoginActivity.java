@@ -19,7 +19,6 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class LoginActivity extends AppCompatActivity {
@@ -50,6 +49,9 @@ public class LoginActivity extends AppCompatActivity {
             if(flag)
             {
                 getForm_toggle().setText(R.string.aff_form);
+                getPseudo_reg().setText("");
+                getMdp_reg().setText("");
+                getMdp_reg_conf().setText("");
                 getPseudo_reg().setVisibility(View.INVISIBLE);
                 getMdp_reg().setVisibility(View.INVISIBLE);
                 getMdp_reg_conf().setVisibility(View.INVISIBLE);
@@ -71,7 +73,9 @@ public class LoginActivity extends AppCompatActivity {
     private View.OnClickListener inscriptionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if((getMdp_reg().getText().toString()).equals(getMdp_reg().getText().toString())){
+            String mdp = getMdp_reg().getText().toString();
+            String mdpConf = getMdp_reg_conf().getText().toString();
+            if(mdp.equals(mdpConf)){
                 Object[] list = new Object[2];
                 list[0] = getPseudo_reg().getText();
                 list[1] = getMdp_reg().getText();
@@ -250,19 +254,17 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(Object[] list)
         {
             if(list[1] == null)
-            {
                 showMessage((String)list[0]);
-            }else{
+            else
                 showMenu((Utilisateur)list[1]);
-            }
         }
     }
-    public class AsynchroneInscription extends AsyncTask<Object, Integer, String>
+    public class AsynchroneInscription extends AsyncTask<Object, Integer, Object[]>
     {
 
         @Override
-        protected String doInBackground(Object[] params) {
-            String res = "";
+        protected Object[] doInBackground(Object[] params) {
+            Object[] list = new Object[2];
             try{
                 URL url = new URL("http://skurt.16mb.com/projetAndroid/creer_compte.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -279,47 +281,44 @@ public class LoginActivity extends AppCompatActivity {
                 int code = connection.getResponseCode();
                 if(code == 200){
                     json_reader.nextName();
-                    switch (json_reader.nextInt()){
+                    list[1] = json_reader.nextInt();
+                    switch ((int)list[1]){
                         case 0:
                             json_reader.nextName();
-                            res = getString(R.string.inscription_ok) + json_reader.nextInt();
+                            list[0] = getString(R.string.inscription_ok) + json_reader.nextInt();
                             break;
                         case 100:
-                            res = getString(R.string.prob_pseudo);
+                            list[0] = getString(R.string.prob_pseudo);
                             break;
                         case 110:
-                            res = getString(R.string.prob_mdp);
+                            list[0] = getString(R.string.prob_mdp);
                             break;
                         case 200:
-                            res = getString(R.string.prob_pseudo_exist);
+                            list[0] = getString(R.string.prob_pseudo_exist);
                             break;
                         case 1000:
-                            res = getString(R.string.prob_DB);
+                            list[0] = getString(R.string.prob_DB);
                             break;
                         default:
-                            res = getString(R.string.prob_autre);
+                            list[0] = getString(R.string.prob_autre);
                             break;
                     }
                 } else
-                    res = getString(R.string.prob_autre);
+                    list[0] = getString(R.string.prob_autre);
             }catch (MalformedURLException e){
-                res = e.getMessage();
+                list[0] = e.getMessage();
             }
             catch(IOException ex) {
-                res = ex.getMessage();
+                list[0] = ex.getMessage();
             }
-            return res;
+            return list;
         }
         @Override
-        protected void onPostExecute(String res)
+        protected void onPostExecute(Object[] list)
         {
-            if(res.contains("Sauvegarde")){
-                getPseudo_reg().setText("");
-                getMdp_reg().setText("");
-                getMdp_reg_conf().setText("");
+            if((int)list[1] == 0)
                 getForm_toggle().callOnClick();
-            }
-            showMessage(res);
+            showMessage((String)list[0]);
         }
     }
 }

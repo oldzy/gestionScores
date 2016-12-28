@@ -19,5 +19,12 @@
     <string name="prob_DB">Problème de connexion à la DB</string>
     <string name="prob_autre">Un autre problème est survenu</string>
     <string name="prob_pseudo_exist">Pseudo déjà existant</string>
-    <string name="inscription_ok">Sauvegarde dans la DB OK avec l'id </string>
+    <string name="inscription_ok">Sauvegarde dans la DB OK avec l\'id </string>
+    <string name="nom_jeu">Nom du jeu</string>
+    <string name="score_obtenu">Score obtenu</string>
+    <string name="ajouter">AJOUTER</string>
+    <string name="score_ok">Score ajouté</string>
+    <string name="prob_score">Problème de score (non transmis ou 0)</string>
+    <string name="prob_nom_jeu">Problème de nom du jeu (non transmis ou vide)</string>
+    <string name="prob_id">Problème d\id (non transmis ou 0)</string>
 </resources>
