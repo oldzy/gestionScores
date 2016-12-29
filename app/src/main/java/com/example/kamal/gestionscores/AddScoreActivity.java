@@ -87,7 +87,7 @@ public class AddScoreActivity extends AppCompatActivity {
             Object[] list = new Object[2];
             try{
                 int score = Integer.parseInt(params[0].toString());
-                URL url = new URL("http://skurt.16mb.com/projetAndroid/ajouter_score.php?score="+score+"&jeu="+params[1].toString().replaceAll(" ", "%20")+"&id_pseudo="+params[2]);
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/ajouter_score.php?score="+score+"&jeu="+params[1].toString().replaceAll(" ", "%20")+"&id_pseudo="+params[2]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 InputStreamReader RPC = new InputStreamReader(connection.getInputStream(), "UTF-8");

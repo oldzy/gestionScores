@@ -83,12 +83,21 @@ public class Top10Activity extends AppCompatActivity {
         t.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         t.setGravity(Gravity.CENTER);
         t.setText(getString(R.string.tableau_score));
+        t.setTextSize(16);
+        t.setHeight(50);
+        t.setBackgroundResource(R.color.colorPrimary);
         getContainer_top_10().addView(t);
         for (int i = 2; list[i]!=null && i<12;i++){
             t = new TextView(this);
             t.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             t.setGravity(Gravity.CENTER);
             t.setText(list[i].toString());
+            t.setTextSize(16);
+            t.setHeight(50);
+            if(i%2 == 0)
+                t.setBackgroundResource(R.color.colorPrimaryDark);
+            else
+                t.setBackgroundResource(R.color.colorPrimaryLight);
             getContainer_top_10().addView(t);
         }
     }
@@ -100,7 +109,7 @@ public class Top10Activity extends AppCompatActivity {
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[12];
             try{
-                URL url = new URL("http://skurt.16mb.com/projetAndroid/afficher_top.php?jeu="+params[0].toString().replaceAll(" ","%20"));
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/afficher_top.php?jeu="+params[0].toString().replaceAll(" ","%20"));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 JsonReader json_reader = new JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));

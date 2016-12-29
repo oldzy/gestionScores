@@ -195,7 +195,7 @@ public class LoginActivity extends AppCompatActivity {
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[2];
             try{
-                URL url = new URL("http://skurt.16mb.com/projetAndroid/se_connecter.php");
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/se_connecter.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 OutputStream OS = connection.getOutputStream();
@@ -266,7 +266,7 @@ public class LoginActivity extends AppCompatActivity {
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[2];
             try{
-                URL url = new URL("http://skurt.16mb.com/projetAndroid/creer_compte.php");
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/creer_compte.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 OutputStream OS = connection.getOutputStream();
@@ -285,7 +285,7 @@ public class LoginActivity extends AppCompatActivity {
                     switch ((int)list[1]){
                         case 0:
                             json_reader.nextName();
-                            list[0] = getString(R.string.inscription_ok) + json_reader.nextInt();
+                            list[0] = getString(R.string.inscription_ok) + " " + json_reader.nextInt();
                             break;
                         case 100:
                             list[0] = getString(R.string.prob_pseudo);

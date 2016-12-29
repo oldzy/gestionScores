@@ -19,7 +19,7 @@
     <string name="prob_DB">Problème de connexion à la DB</string>
     <string name="prob_autre">Un autre problème est survenu</string>
     <string name="prob_pseudo_exist">Pseudo déjà existant</string>
-    <string name="inscription_ok">Sauvegarde dans la DB OK avec l\'id </string>
+    <string name="inscription_ok">Sauvegarde dans la DB OK avec l\'id</string>
     <string name="nom_jeu">Nom du jeu</string>
     <string name="score_obtenu">Score obtenu</string>
     <string name="ajouter">AJOUTER</string>
@@ -32,4 +32,5 @@
     <string name="prob_score_top">Aucun score trouvé (la table des scores est vide pour le moment)</string>
     <string name="tableau_score">Tableau des scores</string>
     <string name="top">TOP</string>
+    <string name="swipe">Swipe pour voir les autres jeux</string>
 </resources>
