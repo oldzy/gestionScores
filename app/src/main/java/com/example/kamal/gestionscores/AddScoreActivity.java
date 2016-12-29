@@ -76,9 +76,6 @@ public class AddScoreActivity extends AppCompatActivity {
     }
 
     public void showMenu(){
-        Intent intent_retour = new Intent();
-        intent_retour.putExtra("utilisateur", user);
-        setResult(RESULT_OK, intent_retour);
         finish();
     }
 
@@ -102,7 +99,6 @@ public class AddScoreActivity extends AppCompatActivity {
                     switch ((int)list[1]){
                         case 0:
                             list[0] = getString(R.string.score_ok);
-                            user.addScore(new Score(params[1].toString(), score));
                             break;
                         case 100:
                             list[0] = getString(R.string.prob_score);

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
-    public final static int NUM_REQUETE = 1;
     private Utilisateur user;
     private Button ajouter_score;
     private Button afficher_top;
@@ -17,13 +16,13 @@ public class MenuActivity extends AppCompatActivity {
     private View.OnClickListener ajouter_scoreListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            startActivityForResult(new Intent(MenuActivity.this, AddScoreActivity.class).putExtra("utilisateur", user), NUM_REQUETE);
+            startActivity(new Intent(MenuActivity.this, AddScoreActivity.class).putExtra("utilisateur", user));
         }
     };
     private View.OnClickListener afficher_topListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            startActivity(new Intent(MenuActivity.this, Top10Activity.class));
         }
     };
     private View.OnClickListener afficher_liste_jeuListener = new View.OnClickListener() {
@@ -87,14 +86,5 @@ public class MenuActivity extends AppCompatActivity {
         getAfficher_liste_utilisateur().setOnClickListener(afficher_liste_utilisateurListener);
 
         user = (Utilisateur)getIntent().getSerializableExtra("utilisateur");
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == NUM_REQUETE){
-            if(resultCode == RESULT_OK){
-                user = (Utilisateur)data.getSerializableExtra("utilisateur");
-            }
-        }
     }
 }

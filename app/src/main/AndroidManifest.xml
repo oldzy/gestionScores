@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MenuActivity" />
-        <activity android:name=".AddScoreActivity"></activity>
+        <activity android:name=".AddScoreActivity" />
+        <activity android:name=".Top10Activity"></activity>
     </application>
 
 </manifest>

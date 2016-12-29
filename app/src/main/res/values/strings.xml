@@ -27,4 +27,8 @@
     <string name="prob_score">Problème de score (non transmis ou 0)</string>
     <string name="prob_nom_jeu">Problème de nom du jeu (non transmis ou vide)</string>
     <string name="prob_id">Problème d\id (non transmis ou 0)</string>
+    <string name="afficher_top_10">AFFICHER</string>
+    <string name="pas_prob">Aucun problème</string>
+    <string name="prob_score_top">Aucun score trouvé (la table des scores est vide pour le moment)</string>
+    <string name="tableau_score">Tableau des scores</string>
 </resources>

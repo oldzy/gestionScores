@@ -11,7 +11,6 @@ public class Utilisateur implements Serializable{
     private int id;
     private String pseudo;
     private String mdp;
-    private ArrayList<Score> listeScore = new ArrayList<Score>();
 
     public int getId() {
         return id;
@@ -33,21 +32,9 @@ public class Utilisateur implements Serializable{
         return mdp;
     }
 
-    public void setListeScore(ArrayList<Score> listeScore) {
-        this.listeScore = listeScore;
-    }
-
-    public ArrayList<Score> getListeScore() {
-        return listeScore;
-    }
-
     public Utilisateur(int _id, String _pseudo, String _mdp){
         id=_id;
         setPseudo(_pseudo);
         setMdp(_mdp);
-    }
-
-    public void addScore(Score s){
-        getListeScore().add(s);
     }
 }
