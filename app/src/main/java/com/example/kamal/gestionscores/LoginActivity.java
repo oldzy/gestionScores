@@ -46,20 +46,17 @@ public class LoginActivity extends AppCompatActivity {
     private View.OnClickListener form_toggleListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(flag)
-            {
+            if (flag) {
                 getForm_toggle().setText(R.string.aff_form);
                 getPseudo_reg().setText("");
                 getMdp_reg().setText("");
                 getMdp_reg_conf().setText("");
-                getPseudo_reg().setVisibility(View.INVISIBLE);
-                getMdp_reg().setVisibility(View.INVISIBLE);
-                getMdp_reg_conf().setVisibility(View.INVISIBLE);
-                getInscription().setVisibility(View.INVISIBLE);
+                getPseudo_reg().setVisibility(View.GONE);
+                getMdp_reg().setVisibility(View.GONE);
+                getMdp_reg_conf().setVisibility(View.GONE);
+                getInscription().setVisibility(View.GONE);
                 flag = false;
-            }
-            else
-            {
+            } else {
                 getForm_toggle().setText(R.string.masq_form);
                 getPseudo_reg().setVisibility(View.VISIBLE);
                 getMdp_reg().setVisibility(View.VISIBLE);
@@ -75,14 +72,12 @@ public class LoginActivity extends AppCompatActivity {
         public void onClick(View v) {
             String mdp = getMdp_reg().getText().toString();
             String mdpConf = getMdp_reg_conf().getText().toString();
-            if(mdp.equals(mdpConf)){
+            if (mdp.equals(mdpConf)) {
                 Object[] list = new Object[2];
                 list[0] = getPseudo_reg().getText();
                 list[1] = getMdp_reg().getText();
                 new AsynchroneInscription().execute(list);
-            }
-            else
-            {
+            } else {
                 showMessage(getString(R.string.mdp_correspond_pas));
             }
         }
@@ -165,42 +160,42 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setContainer((LinearLayout)findViewById(R.id.container));
-        setPseudo_log((EditText)findViewById(R.id.pseudo_log));
-        setMdp_log((EditText)findViewById(R.id.mdp_log));
-        setConnexion((Button)findViewById(R.id.connexion));
-        setForm_toggle((Button)findViewById(R.id.form_toggle));
-        setPseudo_reg((EditText)findViewById(R.id.pseudo_reg));
-        setMdp_reg((EditText)findViewById(R.id.mdp_reg));
-        setMdp_reg_conf((EditText)findViewById(R.id.mdp_reg_conf));
-        setInscription((Button)findViewById(R.id.inscription));
+        setContainer((LinearLayout) findViewById(R.id.container));
+        setPseudo_log((EditText) findViewById(R.id.pseudo_log));
+        setMdp_log((EditText) findViewById(R.id.mdp_log));
+        setConnexion((Button) findViewById(R.id.connexion));
+        setForm_toggle((Button) findViewById(R.id.form_toggle));
+        setPseudo_reg((EditText) findViewById(R.id.pseudo_reg));
+        setMdp_reg((EditText) findViewById(R.id.mdp_reg));
+        setMdp_reg_conf((EditText) findViewById(R.id.mdp_reg_conf));
+        setInscription((Button) findViewById(R.id.inscription));
 
         getConnexion().setOnClickListener(connexionListener);
         getForm_toggle().setOnClickListener(form_toggleListener);
         getInscription().setOnClickListener(inscriptionListener);
     }
 
-    public void showMessage(String m){
+    public void showMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
-    public void showMenu(Utilisateur u){
+    public void showMenu(Utilisateur u) {
         startActivity(new Intent(LoginActivity.this, MenuActivity.class).putExtra("utilisateur", u));
     }
+
     //CLASSE ASYNCHRONE
-    public class AsynchroneConnexion extends AsyncTask<Object, Integer, Object[]>
-    {
+    public class AsynchroneConnexion extends AsyncTask<Object, Integer, Object[]> {
 
         @Override
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[2];
-            try{
+            try {
                 URL url = new URL("http://projetandroid.esy.es/RPCAndroid/se_connecter.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 OutputStream OS = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-                String parametres = "pseudo="+params[0]+"&mdp="+params[1];
+                String parametres = "pseudo=" + params[0] + "&mdp=" + params[1];
                 writer.write(parametres);
                 writer.flush();
                 writer.close();
@@ -209,8 +204,8 @@ public class LoginActivity extends AppCompatActivity {
                 Scanner scan = new Scanner(RPC);
                 scan.useDelimiter(";");
                 int code = connection.getResponseCode();
-                if(code == 200){
-                    switch (Integer.parseInt(scan.next())){
+                if (code == 200) {
+                    switch (Integer.parseInt(scan.next())) {
                         case 0:
                             list[0] = getString(R.string.connexion_ok);
                             list[1] = new Utilisateur(Integer.parseInt(scan.next()), params[0].toString(), params[1].toString());
@@ -240,38 +235,37 @@ public class LoginActivity extends AppCompatActivity {
                     list[0] = getString(R.string.prob_autre);
                     list[1] = null;
                 }
-            }catch (MalformedURLException e){
+            } catch (MalformedURLException e) {
                 list[0] = e.getMessage();
                 list[1] = null;
-            }
-            catch(IOException ex) {
+            } catch (IOException ex) {
                 list[0] = ex.getMessage();
                 list[1] = null;
             }
             return list;
         }
+
         @Override
-        protected void onPostExecute(Object[] list)
-        {
-            if(list[1] == null)
-                showMessage((String)list[0]);
+        protected void onPostExecute(Object[] list) {
+            if (list[1] == null)
+                showMessage((String) list[0]);
             else
-                showMenu((Utilisateur)list[1]);
+                showMenu((Utilisateur) list[1]);
         }
     }
-    public class AsynchroneInscription extends AsyncTask<Object, Integer, Object[]>
-    {
+
+    public class AsynchroneInscription extends AsyncTask<Object, Integer, Object[]> {
 
         @Override
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[2];
-            try{
+            try {
                 URL url = new URL("http://projetandroid.esy.es/RPCAndroid/creer_compte.php");
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 OutputStream OS = connection.getOutputStream();
                 BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(OS, "UTF-8"));
-                String parametres = "pseudo="+params[0]+"&mdp="+params[1];
+                String parametres = "pseudo=" + params[0] + "&mdp=" + params[1];
                 writer.write(parametres);
                 writer.flush();
                 writer.close();
@@ -279,10 +273,10 @@ public class LoginActivity extends AppCompatActivity {
                 JsonReader json_reader = new JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 json_reader.beginObject();
                 int code = connection.getResponseCode();
-                if(code == 200){
+                if (code == 200) {
                     json_reader.nextName();
                     list[1] = json_reader.nextInt();
-                    switch ((int)list[1]){
+                    switch ((int) list[1]) {
                         case 0:
                             json_reader.nextName();
                             list[0] = getString(R.string.inscription_ok) + " " + json_reader.nextInt();
@@ -305,20 +299,19 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 } else
                     list[0] = getString(R.string.prob_autre);
-            }catch (MalformedURLException e){
+            } catch (MalformedURLException e) {
                 list[0] = e.getMessage();
-            }
-            catch(IOException ex) {
+            } catch (IOException ex) {
                 list[0] = ex.getMessage();
             }
             return list;
         }
+
         @Override
-        protected void onPostExecute(Object[] list)
-        {
-            if((int)list[1] == 0)
+        protected void onPostExecute(Object[] list) {
+            if ((int) list[1] == 0)
                 getForm_toggle().callOnClick();
-            showMessage((String)list[0]);
+            showMessage((String) list[0]);
         }
     }
 }

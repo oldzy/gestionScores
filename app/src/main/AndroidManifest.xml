@@ -20,7 +20,8 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".AddScoreActivity" />
         <activity android:name=".Top10Activity" />
-        <activity android:name=".ListeJeuxActivity"></activity>
+        <activity android:name=".ListeJeuxActivity" />
+        <activity android:name=".ListePseudoActivity"></activity>
     </application>
 
 </manifest>

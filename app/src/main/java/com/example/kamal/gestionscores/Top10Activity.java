@@ -67,17 +67,19 @@ public class Top10Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top10);
 
-        setContainer_top_10((LinearLayout)findViewById(R.id.container_top_10));
+        setContainer_top_10((LinearLayout) findViewById(R.id.container_top_10));
         setNom_jeu_top((EditText) findViewById(R.id.nom_jeu_top));
-        setAfficher_top_10((Button)findViewById(R.id.afficher_top_10));
+        setAfficher_top_10((Button) findViewById(R.id.afficher_top_10));
 
         getAfficher_top_10().setOnClickListener(afficher_top_10Listener);
     }
-    public void showMessage(String m){
+
+    public void showMessage(String m) {
         getContainer_top_10().removeAllViews();
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
-    public void showTop10(Object[] list){
+
+    public void showTop10(Object[] list) {
         getContainer_top_10().removeAllViews();
         TextView t = new TextView(this);
         t.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -87,42 +89,42 @@ public class Top10Activity extends AppCompatActivity {
         t.setHeight(50);
         t.setBackgroundResource(R.color.colorPrimary);
         getContainer_top_10().addView(t);
-        for (int i = 2; list[i]!=null && i<12;i++){
+        for (int i = 2; list[i] != null && i < 12; i++) {
             t = new TextView(this);
             t.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             t.setGravity(Gravity.CENTER);
             t.setText(list[i].toString());
             t.setTextSize(16);
             t.setHeight(50);
-            if(i%2 == 0)
+            if (i % 2 == 0)
                 t.setBackgroundResource(R.color.colorPrimaryDark);
             else
                 t.setBackgroundResource(R.color.colorPrimaryLight);
             getContainer_top_10().addView(t);
         }
     }
+
     //CLASSE ASYNCHRONE
-    public class AsynchroneTop extends AsyncTask<Object, Integer, Object[]>
-    {
+    public class AsynchroneTop extends AsyncTask<Object, Integer, Object[]> {
 
         @Override
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[12];
-            try{
-                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/afficher_top.php?jeu="+params[0].toString().replaceAll(" ","%20"));
+            try {
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/afficher_top.php?jeu=" + params[0].toString().replaceAll(" ", "%20"));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 JsonReader json_reader = new JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
                 json_reader.beginObject();
                 int code = connection.getResponseCode();
-                if(code == 200){
+                if (code == 200) {
                     json_reader.nextName();
                     list[1] = json_reader.nextInt();
-                    switch ((int)list[1]){
+                    switch ((int) list[1]) {
                         case 0:
                             json_reader.nextName();
                             json_reader.beginArray();
-                            for (int i=2; json_reader.hasNext() && i<12;i++){
+                            for (int i = 2; json_reader.hasNext() && i < 12; i++) {
                                 json_reader.beginObject();
                                 json_reader.nextName();
                                 String res = json_reader.nextString();
@@ -150,21 +152,20 @@ public class Top10Activity extends AppCompatActivity {
                     }
                 } else
                     list[0] = getString(R.string.prob_autre);
-            }catch (MalformedURLException e){
+            } catch (MalformedURLException e) {
                 list[0] = e.getMessage();
-            }
-            catch(IOException ex) {
+            } catch (IOException ex) {
                 list[0] = ex.getMessage();
             }
             return list;
         }
+
         @Override
-        protected void onPostExecute(Object[] list)
-        {
-            if((int)list[1] == 0)
+        protected void onPostExecute(Object[] list) {
+            if ((int) list[1] == 0)
                 showTop10(list);
             else
-                showMessage((String)list[0]);
+                showMessage((String) list[0]);
         }
     }
 }

@@ -62,20 +62,20 @@ public class AddScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
 
-        setNom_jeu((EditText)findViewById(R.id.nom_jeu));
-        setScore_obtenu((EditText)findViewById(R.id.score_obtenu));
+        setNom_jeu((EditText) findViewById(R.id.nom_jeu));
+        setScore_obtenu((EditText) findViewById(R.id.score_obtenu));
         setAjouter((Button) findViewById(R.id.ajouter));
 
-        user = (Utilisateur)getIntent().getSerializableExtra("utilisateur");
+        user = (Utilisateur) getIntent().getSerializableExtra("utilisateur");
 
         getAjouter().setOnClickListener(ajouterListener);
     }
 
-    public void showMessage(String m){
+    public void showMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
-    public void showMenu(){
+    public void showMenu() {
         finish();
     }
 
@@ -85,18 +85,18 @@ public class AddScoreActivity extends AppCompatActivity {
         @Override
         protected Object[] doInBackground(Object[] params) {
             Object[] list = new Object[2];
-            try{
+            try {
                 int score = Integer.parseInt(params[0].toString());
-                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/ajouter_score.php?score="+score+"&jeu="+params[1].toString().replaceAll(" ", "%20")+"&id_pseudo="+params[2]);
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/ajouter_score.php?score=" + score + "&jeu=" + params[1].toString().replaceAll(" ", "%20") + "&id_pseudo=" + params[2]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.connect();
                 InputStreamReader RPC = new InputStreamReader(connection.getInputStream(), "UTF-8");
                 Scanner scan = new Scanner(RPC);
                 scan.useDelimiter(" ");
                 int code = connection.getResponseCode();
-                if(code == 200){
+                if (code == 200) {
                     list[1] = Integer.parseInt(scan.next());
-                    switch ((int)list[1]){
+                    switch ((int) list[1]) {
                         case 0:
                             list[0] = getString(R.string.score_ok);
                             break;
@@ -118,23 +118,21 @@ public class AddScoreActivity extends AppCompatActivity {
                     }
                 } else
                     list[0] = getString(R.string.prob_autre);
-            }catch (MalformedURLException e){
+            } catch (MalformedURLException e) {
                 list[0] = e.getMessage();
-            }
-            catch(IOException ex) {
+            } catch (IOException ex) {
                 list[0] = ex.getMessage();
-            }
-            catch (NumberFormatException exc){
+            } catch (NumberFormatException exc) {
                 list[1] = 1;
                 list[0] = exc.getMessage();
             }
             return list;
         }
+
         @Override
-        protected void onPostExecute(Object[] list)
-        {
-            showMessage((String)list[0]);
-            if((int)list[1] == 0)
+        protected void onPostExecute(Object[] list) {
+            showMessage((String) list[0]);
+            if ((int) list[1] == 0)
                 showMenu();
         }
     }

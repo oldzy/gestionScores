@@ -34,7 +34,7 @@ public class MenuActivity extends AppCompatActivity {
     private View.OnClickListener afficher_liste_utilisateurListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            startActivity(new Intent(MenuActivity.this, ListePseudoActivity.class));
         }
     };
 
@@ -75,16 +75,16 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        setAjouter_score((Button)findViewById(R.id.ajouter_score));
-        setAfficher_top((Button)findViewById(R.id.afficher_top));
-        setAfficher_liste_jeu((Button)findViewById(R.id.afficher_liste_jeu));
-        setAfficher_liste_utilisateur((Button)findViewById(R.id.afficher_liste_utlisateur));
+        setAjouter_score((Button) findViewById(R.id.ajouter_score));
+        setAfficher_top((Button) findViewById(R.id.afficher_top));
+        setAfficher_liste_jeu((Button) findViewById(R.id.afficher_liste_jeu));
+        setAfficher_liste_utilisateur((Button) findViewById(R.id.afficher_liste_utlisateur));
 
         getAjouter_score().setOnClickListener(ajouter_scoreListener);
         getAfficher_top().setOnClickListener(afficher_topListener);
         getAfficher_liste_jeu().setOnClickListener(afficher_liste_jeuListener);
         getAfficher_liste_utilisateur().setOnClickListener(afficher_liste_utilisateurListener);
 
-        user = (Utilisateur)getIntent().getSerializableExtra("utilisateur");
+        user = (Utilisateur) getIntent().getSerializableExtra("utilisateur");
     }
 }

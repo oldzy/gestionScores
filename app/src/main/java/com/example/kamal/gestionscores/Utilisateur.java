@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * Created by Kamal on 27-12-16.
  */
 
-public class Utilisateur implements Serializable{
+public class Utilisateur implements Serializable {
     private int id;
     private String pseudo;
     private String mdp;
@@ -32,8 +32,8 @@ public class Utilisateur implements Serializable{
         return mdp;
     }
 
-    public Utilisateur(int _id, String _pseudo, String _mdp){
-        id=_id;
+    public Utilisateur(int _id, String _pseudo, String _mdp) {
+        id = _id;
         setPseudo(_pseudo);
         setMdp(_mdp);
     }

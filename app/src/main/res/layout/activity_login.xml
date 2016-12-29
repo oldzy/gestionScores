@@ -9,64 +9,74 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.kamal.gestionscores.LoginActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <EditText
                 android:id="@+id/pseudo_log"
-                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_pseudo"/>
+                android:hint="@string/hint_pseudo"
+                android:inputType="text" />
+
             <EditText
                 android:id="@+id/mdp_log"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_mdp"/>
+                android:hint="@string/hint_mdp"
+                android:inputType="textPassword" />
+
             <Button
                 android:id="@+id/connexion"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/connexion"/>
+                android:text="@string/connexion"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Button" />
+
             <Button
                 android:id="@+id/form_toggle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/aff_form"/>
+                android:text="@string/aff_form" />
+
             <EditText
                 android:id="@+id/pseudo_reg"
-                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_pseudo"
-                android:visibility="invisible"/>
+                android:inputType="text"
+                android:visibility="gone" />
+
             <EditText
                 android:id="@+id/mdp_reg"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_mdp"
-                android:visibility="invisible"/>
+                android:inputType="textPassword"
+                android:visibility="gone" />
+
             <EditText
                 android:id="@+id/mdp_reg_conf"
-                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_mdp_conf"
-                android:visibility="invisible"/>
+                android:inputType="textPassword"
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/inscription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/inscription"
-                android:visibility="invisible"/>
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
