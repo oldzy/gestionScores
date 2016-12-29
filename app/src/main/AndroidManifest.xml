@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".MenuActivity" />
         <activity android:name=".AddScoreActivity" />
-        <activity android:name=".Top10Activity"></activity>
+        <activity android:name=".Top10Activity" />
+        <activity android:name=".ListeJeuxActivity"></activity>
     </application>
 
 </manifest>

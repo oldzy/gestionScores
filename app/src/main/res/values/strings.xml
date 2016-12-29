@@ -31,4 +31,5 @@
     <string name="pas_prob">Aucun problème</string>
     <string name="prob_score_top">Aucun score trouvé (la table des scores est vide pour le moment)</string>
     <string name="tableau_score">Tableau des scores</string>
+    <string name="top">TOP</string>
 </resources>
