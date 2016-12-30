@@ -85,7 +85,7 @@ public class Top10Activity extends AppCompatActivity {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
-    public void showTop10(Object[] list) {
+    public void showTop10(ArrayList<String> list) {
         getContainer_top_10().removeAllViews();
         TextView t = new TextView(this);
         t.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -95,11 +95,11 @@ public class Top10Activity extends AppCompatActivity {
         t.setHeight(50);
         t.setBackgroundResource(R.color.colorPrimary);
         getContainer_top_10().addView(t);
-        for (int i = 2; list[i] != null && i < 12; i++) {
+        for (int i = 0; i < list.size(); i++) {
             t = new TextView(this);
             t.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             t.setGravity(Gravity.CENTER);
-            t.setText(list[i].toString());
+            t.setText(list.get(i));
             t.setTextSize(16);
             t.setHeight(50);
             if (i % 2 == 0)
@@ -119,7 +119,7 @@ public class Top10Activity extends AppCompatActivity {
 
         @Override
         protected Object[] doInBackground(Object[] params) {
-            Object[] list = new Object[12];
+            Object[] list = new Object[13];
             try {
                 URL url = new URL("http://projetandroid.esy.es/RPCAndroid/afficher_top.php?jeu=" + params[0].toString().replaceAll(" ", "%20"));
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -134,7 +134,7 @@ public class Top10Activity extends AppCompatActivity {
                         case 0:
                             json_reader.nextName();
                             json_reader.beginArray();
-                            for (int i = 2; json_reader.hasNext() && i < 12; i++) {
+                            for (int i = 2; json_reader.hasNext(); i++) {
                                 json_reader.beginObject();
                                 json_reader.nextName();
                                 String res = json_reader.nextString();
@@ -172,9 +172,13 @@ public class Top10Activity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Object[] list) {
-            if ((int) list[1] == 0)
-                showTop10(list);
-            else
+            if ((int) list[1] == 0) {
+                ArrayList<String> listeTop = new ArrayList<String>();
+                for (int i = 2; list[i] != null; i++) {
+                    listeTop.add(list[i].toString());
+                }
+                showTop10(listeTop);
+            } else
                 showMessage((String) list[0]);
         }
     }
