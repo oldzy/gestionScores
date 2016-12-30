@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -14,13 +18,15 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddScoreActivity extends AppCompatActivity {
     private Utilisateur user;
-    private EditText nom_jeu;
+    private AutoCompleteTextView nom_jeu;
     private EditText score_obtenu;
     private Button ajouter;
+    private ArrayList<String> listeJeux = new ArrayList<String>();
 
     private View.OnClickListener ajouterListener = new View.OnClickListener() {
         @Override
@@ -33,11 +39,11 @@ public class AddScoreActivity extends AppCompatActivity {
         }
     };
 
-    public void setNom_jeu(EditText nom_jeu) {
+    public void setNom_jeu(AutoCompleteTextView nom_jeu) {
         this.nom_jeu = nom_jeu;
     }
 
-    public EditText getNom_jeu() {
+    public AutoCompleteTextView getNom_jeu() {
         return nom_jeu;
     }
 
@@ -62,13 +68,14 @@ public class AddScoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_score);
 
-        setNom_jeu((EditText) findViewById(R.id.nom_jeu));
+        setNom_jeu((AutoCompleteTextView) findViewById(R.id.nom_jeu));
         setScore_obtenu((EditText) findViewById(R.id.score_obtenu));
         setAjouter((Button) findViewById(R.id.ajouter));
 
         user = (Utilisateur) getIntent().getSerializableExtra("utilisateur");
 
         getAjouter().setOnClickListener(ajouterListener);
+        new AsynchroneListe().execute();
     }
 
     public void showMessage(String m) {
@@ -77,6 +84,10 @@ public class AddScoreActivity extends AppCompatActivity {
 
     public void showMenu() {
         finish();
+    }
+
+    public void autocompletion() {
+        getNom_jeu().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listeJeux.toArray(new String[0])));
     }
 
     //CLASSE ASYNCHRONE
@@ -134,6 +145,69 @@ public class AddScoreActivity extends AppCompatActivity {
             showMessage((String) list[0]);
             if ((int) list[1] == 0)
                 showMenu();
+        }
+    }
+
+    public class AsynchroneListe extends AsyncTask<Object, Integer, ArrayList<Object>> {
+
+        @Override
+        protected ArrayList<Object> doInBackground(Object[] params) {
+            ArrayList<Object> list = new ArrayList<Object>();
+            try {
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/lister_jeux.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                JsonReader json_reader = new JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+                json_reader.beginObject();
+                int code = connection.getResponseCode();
+                if (code == 200) {
+                    json_reader.nextName();
+                    list.add(json_reader.nextInt());
+                    switch ((int) list.get(0)) {
+                        case 0:
+                            list.add(getString(R.string.pas_prob));
+                            json_reader.nextName();
+                            json_reader.beginArray();
+                            while (json_reader.hasNext()) {
+                                json_reader.beginObject();
+                                json_reader.nextName();
+                                list.add(json_reader.nextString());
+                                json_reader.nextName();
+                                json_reader.nextString();
+                                json_reader.endObject();
+                            }
+                            json_reader.endArray();
+                            json_reader.endObject();
+                            break;
+                        case 300:
+                            list.add(getString(R.string.prob_nom_jeu));
+                            break;
+                        case 1000:
+                            list.add(getString(R.string.prob_DB));
+                            break;
+                        default:
+                            list.add(getString(R.string.prob_autre));
+                            break;
+                    }
+                } else
+                    list.add(getString(R.string.prob_autre));
+            } catch (MalformedURLException e) {
+                list.add(e.getMessage());
+            } catch (IOException ex) {
+                list.add(ex.getMessage());
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Object> list) {
+            if ((int) list.get(0) == 0) {
+                for (int i = 2; i < list.size(); i++) {
+                    listeJeux.add(list.get(i).toString());
+                }
+                autocompletion();
+            } else
+                showMessage((String) list.get(1));
         }
     }
 }

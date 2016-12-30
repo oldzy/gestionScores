@@ -9,28 +9,33 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.kamal.gestionscores.AddScoreActivity">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <EditText
+
+            <AutoCompleteTextView
                 android:id="@+id/nom_jeu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nom_jeu"/>
+                android:hint="@string/nom_jeu" />
+
             <EditText
                 android:id="@+id/score_obtenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/score_obtenu"/>
+                android:hint="@string/score_obtenu" />
+
             <Button
                 android:id="@+id/ajouter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/ajouter"/>
+                android:text="@string/ajouter" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

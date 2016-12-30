@@ -5,9 +5,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -23,11 +26,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Top10Activity extends AppCompatActivity {
     private LinearLayout container_top_10;
-    private EditText nom_jeu_top;
+    private AutoCompleteTextView nom_jeu_top;
     private Button afficher_top_10;
+    private ArrayList<String> listeJeux = new ArrayList<String>();
 
     private View.OnClickListener afficher_top_10Listener = new View.OnClickListener() {
         @Override
@@ -46,11 +51,11 @@ public class Top10Activity extends AppCompatActivity {
         return container_top_10;
     }
 
-    public void setNom_jeu_top(EditText nom_jeu_top) {
+    public void setNom_jeu_top(AutoCompleteTextView nom_jeu_top) {
         this.nom_jeu_top = nom_jeu_top;
     }
 
-    public EditText getNom_jeu_top() {
+    public AutoCompleteTextView getNom_jeu_top() {
         return nom_jeu_top;
     }
 
@@ -68,10 +73,11 @@ public class Top10Activity extends AppCompatActivity {
         setContentView(R.layout.activity_top10);
 
         setContainer_top_10((LinearLayout) findViewById(R.id.container_top_10));
-        setNom_jeu_top((EditText) findViewById(R.id.nom_jeu_top));
+        setNom_jeu_top((AutoCompleteTextView) findViewById(R.id.nom_jeu_top));
         setAfficher_top_10((Button) findViewById(R.id.afficher_top_10));
 
         getAfficher_top_10().setOnClickListener(afficher_top_10Listener);
+        new AsynchroneListe().execute();
     }
 
     public void showMessage(String m) {
@@ -102,6 +108,10 @@ public class Top10Activity extends AppCompatActivity {
                 t.setBackgroundResource(R.color.colorPrimaryLight);
             getContainer_top_10().addView(t);
         }
+    }
+
+    public void autocompletion() {
+        getNom_jeu_top().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listeJeux.toArray(new String[0])));
     }
 
     //CLASSE ASYNCHRONE
@@ -166,6 +176,69 @@ public class Top10Activity extends AppCompatActivity {
                 showTop10(list);
             else
                 showMessage((String) list[0]);
+        }
+    }
+
+    public class AsynchroneListe extends AsyncTask<Object, Integer, ArrayList<Object>> {
+
+        @Override
+        protected ArrayList<Object> doInBackground(Object[] params) {
+            ArrayList<Object> list = new ArrayList<Object>();
+            try {
+                URL url = new URL("http://projetandroid.esy.es/RPCAndroid/lister_jeux.php");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                JsonReader json_reader = new JsonReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+                json_reader.beginObject();
+                int code = connection.getResponseCode();
+                if (code == 200) {
+                    json_reader.nextName();
+                    list.add(json_reader.nextInt());
+                    switch ((int) list.get(0)) {
+                        case 0:
+                            list.add(getString(R.string.pas_prob));
+                            json_reader.nextName();
+                            json_reader.beginArray();
+                            while (json_reader.hasNext()) {
+                                json_reader.beginObject();
+                                json_reader.nextName();
+                                list.add(json_reader.nextString());
+                                json_reader.nextName();
+                                json_reader.nextString();
+                                json_reader.endObject();
+                            }
+                            json_reader.endArray();
+                            json_reader.endObject();
+                            break;
+                        case 300:
+                            list.add(getString(R.string.prob_nom_jeu));
+                            break;
+                        case 1000:
+                            list.add(getString(R.string.prob_DB));
+                            break;
+                        default:
+                            list.add(getString(R.string.prob_autre));
+                            break;
+                    }
+                } else
+                    list.add(getString(R.string.prob_autre));
+            } catch (MalformedURLException e) {
+                list.add(e.getMessage());
+            } catch (IOException ex) {
+                list.add(ex.getMessage());
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Object> list) {
+            if ((int) list.get(0) == 0) {
+                for (int i = 2; i < list.size(); i++) {
+                    listeJeux.add(list.get(i).toString());
+                }
+                autocompletion();
+            } else
+                showMessage((String) list.get(1));
         }
     }
 }
