@@ -33,4 +33,5 @@
     <string name="tableau_score">Top 10</string>
     <string name="top">TOP</string>
     <string name="swipe">Swipe pour voir les autres jeux</string>
+    <string name="wizard">WIZARD</string>
 </resources>

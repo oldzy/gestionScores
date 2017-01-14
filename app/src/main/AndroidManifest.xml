@@ -21,7 +21,8 @@
         <activity android:name=".AddScoreActivity" />
         <activity android:name=".Top10Activity" />
         <activity android:name=".ListeJeuxActivity" />
-        <activity android:name=".ListePseudoActivity"></activity>
+        <activity android:name=".ListePseudoActivity" />
+        <activity android:name=".WizardActivity"></activity>
     </application>
 
 </manifest>

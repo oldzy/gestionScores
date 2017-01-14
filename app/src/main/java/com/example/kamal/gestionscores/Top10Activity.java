@@ -1,5 +1,6 @@
 package com.example.kamal.gestionscores;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -29,9 +30,11 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class Top10Activity extends AppCompatActivity {
+    public final static int NUM_REQUETE = 1;
     private LinearLayout container_top_10;
     private AutoCompleteTextView nom_jeu_top;
     private Button afficher_top_10;
+    private Button wizard_top;
     private ArrayList<String> listeJeux = new ArrayList<String>();
 
     private View.OnClickListener afficher_top_10Listener = new View.OnClickListener() {
@@ -40,6 +43,13 @@ public class Top10Activity extends AppCompatActivity {
             Object[] list = new Object[1];
             list[0] = getNom_jeu_top().getText();
             new AsynchroneTop().execute(list);
+        }
+    };
+
+    private View.OnClickListener wizardListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivityForResult(new Intent(Top10Activity.this, WizardActivity.class), NUM_REQUETE);
         }
     };
 
@@ -67,6 +77,14 @@ public class Top10Activity extends AppCompatActivity {
         return afficher_top_10;
     }
 
+    public Button getWizard_top() {
+        return wizard_top;
+    }
+
+    public void setWizard_top(Button wizard_top) {
+        this.wizard_top = wizard_top;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +93,17 @@ public class Top10Activity extends AppCompatActivity {
         setContainer_top_10((LinearLayout) findViewById(R.id.container_top_10));
         setNom_jeu_top((AutoCompleteTextView) findViewById(R.id.nom_jeu_top));
         setAfficher_top_10((Button) findViewById(R.id.afficher_top_10));
+        setWizard_top((Button) findViewById(R.id.wizard_top));
 
         getAfficher_top_10().setOnClickListener(afficher_top_10Listener);
+        getWizard_top().setOnClickListener(wizardListener);
         new AsynchroneListe().execute();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == NUM_REQUETE)
+            if (resultCode == RESULT_OK)
+                getNom_jeu_top().setText(data.getStringExtra("jeu").toLowerCase());
     }
 
     public void showMessage(String m) {

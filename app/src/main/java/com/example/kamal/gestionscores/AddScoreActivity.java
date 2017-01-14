@@ -22,10 +22,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddScoreActivity extends AppCompatActivity {
+    public final static int NUM_REQUETE = 1;
     private Utilisateur user;
     private AutoCompleteTextView nom_jeu;
     private EditText score_obtenu;
     private Button ajouter;
+    private Button wizard;
     private ArrayList<String> listeJeux = new ArrayList<String>();
 
     private View.OnClickListener ajouterListener = new View.OnClickListener() {
@@ -36,6 +38,13 @@ public class AddScoreActivity extends AppCompatActivity {
             list[1] = getNom_jeu().getText();
             list[2] = user.getId();
             new AsynchroneAjout().execute(list);
+        }
+    };
+
+    private View.OnClickListener wizardListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivityForResult(new Intent(AddScoreActivity.this, WizardActivity.class), NUM_REQUETE);
         }
     };
 
@@ -63,6 +72,14 @@ public class AddScoreActivity extends AppCompatActivity {
         return ajouter;
     }
 
+    public Button getWizard() {
+        return wizard;
+    }
+
+    public void setWizard(Button wizard) {
+        this.wizard = wizard;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +88,20 @@ public class AddScoreActivity extends AppCompatActivity {
         setNom_jeu((AutoCompleteTextView) findViewById(R.id.nom_jeu));
         setScore_obtenu((EditText) findViewById(R.id.score_obtenu));
         setAjouter((Button) findViewById(R.id.ajouter));
+        setWizard((Button) findViewById(R.id.wizard));
 
         user = (Utilisateur) getIntent().getSerializableExtra("utilisateur");
 
         getAjouter().setOnClickListener(ajouterListener);
+        getWizard().setOnClickListener(wizardListener);
         new AsynchroneListe().execute();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == NUM_REQUETE)
+            if(resultCode == RESULT_OK)
+                getNom_jeu().setText(data.getStringExtra("jeu").toLowerCase());
     }
 
     public void showMessage(String m) {

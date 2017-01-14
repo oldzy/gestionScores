@@ -36,6 +36,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/ajouter" />
+
+            <Button
+                android:id="@+id/wizard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wizard" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
