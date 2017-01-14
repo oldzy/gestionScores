@@ -7,12 +7,18 @@ import android.view.View;
 import android.widget.Button;
 
 public class MenuActivity extends AppCompatActivity {
+    /*
+    * ATTRIBUTS
+     */
     private Utilisateur user;
     private Button ajouter_score;
     private Button afficher_top;
     private Button afficher_liste_jeu;
     private Button afficher_liste_utilisateur;
 
+    /*
+    * LISTENERS
+     */
     private View.OnClickListener ajouter_scoreListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -38,6 +44,9 @@ public class MenuActivity extends AppCompatActivity {
         }
     };
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public void setAjouter_score(Button ajouter_score) {
         this.ajouter_score = ajouter_score;
     }

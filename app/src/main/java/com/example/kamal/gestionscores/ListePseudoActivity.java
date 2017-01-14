@@ -4,7 +4,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -21,9 +20,15 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class ListePseudoActivity extends AppCompatActivity {
+    /*
+    * ATTRIBUTS
+     */
     private LinearLayout liste_pseudo;
     private ArrayList<String> pseudo = new ArrayList<String>();
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public void setListe_pseudo(LinearLayout liste_pseudo) {
         this.liste_pseudo = liste_pseudo;
     }
@@ -42,10 +47,18 @@ public class ListePseudoActivity extends AppCompatActivity {
         new AsynchroneListe().execute();
     }
 
+    /*
+    * METHODE showMessage
+    * Elle sert à afficher un popup
+     */
     public void showMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+    * METHODE showListePseudo
+    * Elle sert à afficher la liste des utilisateurs
+     */
     public void showListePseudo() {
         for (int i = 0; i < pseudo.size(); i++) {
             TextView t = new TextView(this);
@@ -62,7 +75,9 @@ public class ListePseudoActivity extends AppCompatActivity {
         }
     }
 
-    //CLASSE ASYNCHRONE
+    /*
+    * CLASSES ASYNCHRONES
+     */
     public class AsynchroneListe extends AsyncTask<Object, Integer, ArrayList<Object>> {
 
         @Override

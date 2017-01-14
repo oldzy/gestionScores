@@ -2,34 +2,31 @@ package com.example.kamal.gestionscores;
 
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class Top10Activity extends AppCompatActivity {
+    /*
+    * ATTRIBUTS
+     */
     public final static int NUM_REQUETE = 1;
     private LinearLayout container_top_10;
     private AutoCompleteTextView nom_jeu_top;
@@ -37,6 +34,9 @@ public class Top10Activity extends AppCompatActivity {
     private Button wizard_top;
     private ArrayList<String> listeJeux = new ArrayList<String>();
 
+    /*
+    * LISTENERS
+     */
     private View.OnClickListener afficher_top_10Listener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -53,6 +53,9 @@ public class Top10Activity extends AppCompatActivity {
         }
     };
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public void setContainer_top_10(LinearLayout container_top_10) {
         this.container_top_10 = container_top_10;
     }
@@ -100,17 +103,30 @@ public class Top10Activity extends AppCompatActivity {
         new AsynchroneListe().execute();
     }
 
+    /*
+    * METHODE onActivityResult
+    * Elle sert a récuperer le nom du jeu selectionner dans le wizard et le mettre dans l'AutoCompleteTextView nom_jeu
+     */
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == NUM_REQUETE)
             if (resultCode == RESULT_OK)
                 getNom_jeu_top().setText(data.getStringExtra("jeu").toLowerCase());
     }
 
+    /*
+    * METHODE showMessage
+    * Elle sert à afficher un popup
+     */
     public void showMessage(String m) {
         getContainer_top_10().removeAllViews();
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+    * METHODE showTop10
+    * Elle sert à afficher une liste de jeu
+     */
     public void showTop10(ArrayList<String> list) {
         getContainer_top_10().removeAllViews();
         TextView t = new TextView(this);
@@ -136,11 +152,17 @@ public class Top10Activity extends AppCompatActivity {
         }
     }
 
+    /*
+    * METHODE autocompletion
+    * Elle sert à transmettre la liste de proposition pour l'autocompletion du champ nom_jeu
+     */
     public void autocompletion() {
         getNom_jeu_top().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listeJeux.toArray(new String[0])));
     }
 
-    //CLASSE ASYNCHRONE
+    /*
+    * CLASSES ASYNCHRONES
+     */
     public class AsynchroneTop extends AsyncTask<Object, Integer, Object[]> {
 
         @Override

@@ -22,6 +22,9 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class LoginActivity extends AppCompatActivity {
+    /*
+    * ATTRIBUTS
+     */
     private boolean flag = false;
     private LinearLayout container;
     private EditText pseudo_log;
@@ -33,6 +36,9 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mdp_reg_conf;
     private Button inscription;
 
+    /*
+    * LISTENERS
+     */
     private View.OnClickListener connexionListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -83,6 +89,9 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public void setContainer(LinearLayout container) {
         this.container = container;
     }
@@ -175,15 +184,25 @@ public class LoginActivity extends AppCompatActivity {
         getInscription().setOnClickListener(inscriptionListener);
     }
 
+    /*
+    * METHODE showMessage
+    * Elle sert à afficher un popup
+     */
     public void showMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+    * METHODE showMenu
+    * Elle sert a demarrer une nouvelle activity(MenuActivity)
+     */
     public void showMenu(Utilisateur u) {
         startActivity(new Intent(LoginActivity.this, MenuActivity.class).putExtra("utilisateur", u));
     }
 
-    //CLASSE ASYNCHRONE
+    /*
+    * CLASSES ASYNCHRONES
+     */
     public class AsynchroneConnexion extends AsyncTask<Object, Integer, Object[]> {
 
         @Override

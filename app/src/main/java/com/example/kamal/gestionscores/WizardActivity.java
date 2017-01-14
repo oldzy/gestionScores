@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -22,19 +21,28 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class WizardActivity extends AppCompatActivity {
+    /*
+    * ATTRIBUTS
+     */
     private LinearLayout container;
     private ArrayList<String> listeJeux = new ArrayList<String>();
 
+    /*
+    * LISTENERS
+     */
     private View.OnClickListener jeuListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Intent intent_retour = new Intent();
-            intent_retour.putExtra("jeu", ((Button)v).getText());
+            intent_retour.putExtra("jeu", ((Button) v).getText());
             setResult(RESULT_OK, intent_retour);
             finish();
         }
     };
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public void setContainer(LinearLayout container) {
         this.container = container;
     }
@@ -53,10 +61,18 @@ public class WizardActivity extends AppCompatActivity {
         new AsynchroneListeWizard().execute();
     }
 
+    /*
+    * METHODE showMessage
+    * Elle sert à afficher un popup
+     */
     public void showMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+    * METHODE showListeJeux
+    * Elle sert à afficher la liste des jeux disponibles sous forme de boutton
+     */
     public void showListeJeux() {
         ArrayList<Button> list = new ArrayList<Button>();
         for (String s : listeJeux) {
@@ -74,7 +90,9 @@ public class WizardActivity extends AppCompatActivity {
         }
     }
 
-    //CLASSE ASYNCHRONE
+    /*
+    * CLASSES ASYNCHRONES
+     */
     public class AsynchroneListeWizard extends AsyncTask<Object, Integer, ArrayList<Object>> {
 
         @Override

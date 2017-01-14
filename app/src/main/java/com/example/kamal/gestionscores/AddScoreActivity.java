@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.JsonReader;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -22,6 +21,9 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddScoreActivity extends AppCompatActivity {
+    /*
+    * ATTRIBUTS
+     */
     public final static int NUM_REQUETE = 1;
     private Utilisateur user;
     private AutoCompleteTextView nom_jeu;
@@ -30,6 +32,9 @@ public class AddScoreActivity extends AppCompatActivity {
     private Button wizard;
     private ArrayList<String> listeJeux = new ArrayList<String>();
 
+    /*
+    * LISTENERS
+     */
     private View.OnClickListener ajouterListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -48,6 +53,9 @@ public class AddScoreActivity extends AppCompatActivity {
         }
     };
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public void setNom_jeu(AutoCompleteTextView nom_jeu) {
         this.nom_jeu = nom_jeu;
     }
@@ -96,27 +104,44 @@ public class AddScoreActivity extends AppCompatActivity {
         getWizard().setOnClickListener(wizardListener);
         new AsynchroneListe().execute();
     }
-
+    /*
+    * METHODE onActivityResult
+    * Elle sert a récuperer le nom du jeu selectionner dans le wizard et le mettre dans l'AutoCompleteTextView nom_jeu
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == NUM_REQUETE)
-            if(resultCode == RESULT_OK)
+        if (requestCode == NUM_REQUETE)
+            if (resultCode == RESULT_OK)
                 getNom_jeu().setText(data.getStringExtra("jeu").toLowerCase());
     }
 
+    /*
+    * METHODE showMessage
+    * Elle sert à afficher un popup
+     */
     public void showMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+    * METHODE showMenu
+    * Elle sert à mettre fin a l'activity
+     */
     public void showMenu() {
         finish();
     }
 
+    /*
+    * METHODE autocompletion
+    * Elle sert à transmettre la liste de proposition pour l'autocompletion du champ nom_jeu
+     */
     public void autocompletion() {
         getNom_jeu().setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listeJeux.toArray(new String[0])));
     }
 
-    //CLASSE ASYNCHRONE
+    /*
+    * CLASSES ASYNCHRONES
+     */
     public class AsynchroneAjout extends AsyncTask<Object, Integer, Object[]> {
 
         @Override

@@ -1,13 +1,9 @@
 package com.example.kamal.gestionscores;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.JsonReader;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,11 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,9 +20,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListeJeuxActivity extends AppCompatActivity {
+    /*
+    * ATTRIBUTS
+     */
     static final int MIN_DISTANCE = 100;
     private LinearLayout liste_jeux;
     private double x1, x2;
@@ -37,6 +32,9 @@ public class ListeJeuxActivity extends AppCompatActivity {
     private ArrayList<String> listeJeux = new ArrayList<String>();
     private ArrayList<String> listeTop = new ArrayList<String>();
 
+    /*
+    * LISTENERS
+     */
     private View.OnClickListener jeuxListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -54,6 +52,9 @@ public class ListeJeuxActivity extends AppCompatActivity {
         }
     };
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public void setListe_jeux(LinearLayout liste_jeux) {
         this.liste_jeux = liste_jeux;
     }
@@ -72,6 +73,9 @@ public class ListeJeuxActivity extends AppCompatActivity {
         new AsynchroneListe().execute();
     }
 
+    /*
+    * Redefinition de la methode dispatchTouchEvent afin de gérer le swipe
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
@@ -101,10 +105,18 @@ public class ListeJeuxActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(event);
     }
 
+    /*
+    * METHODE showMessage
+    * Elle sert à afficher un popup
+     */
     public void showMessage(String m) {
         Toast.makeText(this, m, Toast.LENGTH_SHORT).show();
     }
 
+    /*
+    * METHODE showTop
+    * Elle sert à afficher le top 10 d'un jeu
+     */
     public void showTop(LinearLayout lTop) {
         lTop.removeAllViews();
         TextView t = new TextView(this);
@@ -125,6 +137,10 @@ public class ListeJeuxActivity extends AppCompatActivity {
         lTop.setVisibility(View.VISIBLE);
     }
 
+    /*
+    * METHODE showListeJeux
+    * Elle sert à afficher la liste des jeux gérés
+     */
     public void showListeJeux() {
         int height = findViewById(R.id.screen).getHeight() / 5;
         int width = findViewById(R.id.screen).getWidth() / 4;
@@ -168,7 +184,9 @@ public class ListeJeuxActivity extends AppCompatActivity {
         }
     }
 
-    //CLASSE ASYNCHRONE
+    /*
+    * CLASSES ASYNCHRONES
+     */
     public class AsynchroneListe extends AsyncTask<Object, Integer, ArrayList<Object>> {
 
         @Override

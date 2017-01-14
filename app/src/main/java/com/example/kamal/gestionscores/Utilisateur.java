@@ -8,10 +8,16 @@ import java.util.ArrayList;
  */
 
 public class Utilisateur implements Serializable {
+    /*
+    * ATTRIBUTS
+     */
     private int id;
     private String pseudo;
     private String mdp;
 
+    /*
+    * SETTERS ET GETTERS
+     */
     public int getId() {
         return id;
     }
@@ -32,6 +38,9 @@ public class Utilisateur implements Serializable {
         return mdp;
     }
 
+    /*
+    * CONSTRUCTEURS
+     */
     public Utilisateur(int _id, String _pseudo, String _mdp) {
         id = _id;
         setPseudo(_pseudo);
