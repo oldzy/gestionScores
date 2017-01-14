@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Score management</string>
+    <string name="aff_form">DISPLAY FORM</string>
+    <string name="afficher_liste_jeu">DISPLAY THE LISTING OF HANDLED GAMES</string>
+    <string name="afficher_liste_utlisateur">DISPLAY THE LISTING OF THE USERS</string>
+    <string name="afficher_top">DISPLAY THE TOP 10 OF A GAME</string>
+    <string name="afficher_top_10">DISPLAY</string>
+    <string name="ajouter">ADD</string>
+    <string name="ajouter_score">ADD A SCORE</string>
+    <string name="connexion">CONNECTION</string>
+    <string name="connexion_ok">OK</string>
+    <string name="ecran_acceuil">Home</string>
+    <string name="ecran_ajout_score">Add a score</string>
+    <string name="ecran_liste_jeu">Listing of handled games</string>
+    <string name="ecran_top10">Display the top 10</string>
+    <string name="ecran_utilisateur">Listing of users</string>
+    <string name="ecran_wizard">Wizard</string>
+    <string name="hint_mdp">Password</string>
+    <string name="hint_mdp_conf">Confirm password</string>
+    <string name="hint_pseudo">Username</string>
+    <string name="inscription">REGISTRATION</string>
+    <string name="inscription_ok">Saving in the DB with the id</string>
+    <string name="masq_form">HIDE FORM</string>
+    <string name="mdp_correspond_pas">passwords doesn\'t match</string>
+    <string name="nom_jeu">Name of the game</string>
+    <string name="pas_prob">No problem</string>
+    <string name="prob_DB">Problem DB connection</string>
+    <string name="prob_autre">An other problem occur</string>
+    <string name="prob_combinaison">Wrong username/password combination</string>
+    <string name="prob_id">Problem of id (not given or 0)</string>
+    <string name="prob_mdp">Problem of password (not given or empty)</string>
+    <string name="prob_nom_jeu">Problem of game name (not given or empty)</string>
+    <string name="prob_pseudo">Problem of username (not given or empty)</string>
+    <string name="prob_pseudo_exist">Username already existing</string>
+    <string name="prob_score">Problem of score (not given or 0)</string>
+    <string name="prob_score_top">No score found (the score table is empty for now)</string>
+    <string name="score_obtenu">Reached score</string>
+    <string name="score_ok">Added score</string>
+    <string name="swipe">Swipe to see the other games</string>
+    <string name="tableau_score">Top 10</string>
+    <string name="top">TOP</string>
+    <string name="wizard">WIZARD</string>
+</resources>
