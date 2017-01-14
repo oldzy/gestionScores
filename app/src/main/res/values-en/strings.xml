@@ -8,7 +8,7 @@
     <string name="afficher_top_10">DISPLAY</string>
     <string name="ajouter">ADD</string>
     <string name="ajouter_score">ADD A SCORE</string>
-    <string name="connexion">CONNECTION</string>
+    <string name="connexion">SIGN IN</string>
     <string name="connexion_ok">OK</string>
     <string name="ecran_acceuil">Home</string>
     <string name="ecran_ajout_score">Add a score</string>
@@ -19,7 +19,7 @@
     <string name="hint_mdp">Password</string>
     <string name="hint_mdp_conf">Confirm password</string>
     <string name="hint_pseudo">Username</string>
-    <string name="inscription">REGISTRATION</string>
+    <string name="inscription">SIGN UP</string>
     <string name="inscription_ok">Saving in the DB with the id</string>
     <string name="masq_form">HIDE FORM</string>
     <string name="mdp_correspond_pas">passwords doesn\'t match</string>
