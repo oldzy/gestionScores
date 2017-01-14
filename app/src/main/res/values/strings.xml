@@ -34,4 +34,10 @@
     <string name="top">TOP</string>
     <string name="swipe">Swipe pour voir les autres jeux</string>
     <string name="wizard">WIZARD</string>
+    <string name="ecran_acceuil">Accueil</string>
+    <string name="ecran_ajout_score">Ajouter un score</string>
+    <string name="ecran_top10">Afficher le top 10</string>
+    <string name="ecran_wizard">Wizard</string>
+    <string name="ecran_liste_jeu">Liste des jeux gérés</string>
+    <string name="ecran_utilisateur">Liste des utilisateurs</string>
 </resources>
